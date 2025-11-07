@@ -89,17 +89,26 @@ export function TrendingPetitions() {
       <div className="space-y-3">
         {sortedPetitions.slice(0, 10).map((petition, index) => (
           <Link key={petition.id} href={`/petitions/${petition.id}`}>
-            <Card className="glass-dark border-primary/20 hover:border-primary/40 transition-all group cursor-pointer">
-              <CardContent className="p-4">
+            <Card className={`glass-dark transition-all group cursor-pointer relative overflow-hidden ${
+              petition.isBoosted 
+                ? "border-accent/50 border-2 shadow-lg shadow-accent/20" 
+                : "border-primary/20 hover:border-primary/40"
+            }`}>
+              {/* Boosted Glow Effect */}
+              {petition.isBoosted && (
+                <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-primary/5 pointer-events-none" />
+              )}
+              
+              <CardContent className="p-4 relative z-10">
                 <div className="flex items-start gap-4">
                   {/* Rank Badge */}
-                  <div className={`flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg border ${
+                  <div className={`flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg border transition-all ${
                     petition.isBoosted 
-                      ? "bg-gradient-to-br from-accent/30 to-primary/30 border-accent/50" 
+                      ? "bg-gradient-to-br from-accent to-primary border-accent shadow-lg shadow-accent/50 animate-pulse" 
                       : "bg-gradient-to-br from-primary/20 to-accent/20 border-primary/30"
                   }`}>
                     {petition.isBoosted ? (
-                      <Zap size={16} className="text-accent" />
+                      <Zap size={16} className="text-white fill-white" />
                     ) : (
                       <span className="text-sm font-bold text-primary">#{index + 1}</span>
                     )}
@@ -107,14 +116,16 @@ export function TrendingPetitions() {
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <h3 className={`font-semibold group-hover:text-primary transition-colors line-clamp-2 ${
+                        petition.isBoosted ? "text-accent" : "text-foreground"
+                      }`}>
                         {petition.title}
                       </h3>
                       {petition.isBoosted && (
-                        <Badge className="bg-accent/20 text-accent border-accent/50 text-xs">
-                          <Zap size={10} className="mr-1" />
-                          Boosted
+                        <Badge className="bg-gradient-to-r from-accent to-primary text-white border-0 text-xs font-bold shadow-md">
+                          <Zap size={10} className="mr-1 fill-white" />
+                          BOOSTED
                         </Badge>
                       )}
                     </div>

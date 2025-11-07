@@ -1,22 +1,19 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import {
   ArrowLeft,
-  Heart,
   Share2,
-  MessageSquare,
   Users,
   TrendingUp,
   Clock,
-  Vote,
+  Zap,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PetitionActions } from "@/components/petition-actions"
+import { PetitionSigners } from "@/components/petition-signers"
 import { useGetPetition } from "@/hooks/use-contracts"
 import { Loader2 } from "lucide-react"
 
@@ -26,7 +23,6 @@ interface PetitionDetailProps {
 
 export function PetitionDetail({ petitionId }: PetitionDetailProps) {
   const { data: petitionData, isLoading } = useGetPetition(petitionId)
-  const [isLiked, setIsLiked] = useState(false)
 
   if (isLoading) {
     return (
@@ -49,9 +45,6 @@ export function PetitionDetail({ petitionId }: PetitionDetailProps) {
     id: Number(petitionData.id),
     title: petitionData.title || "Untitled Petition",
     description: petitionData.description || "",
-    fullDescription: petitionData.description || "",
-    category: "General",
-    status: "active",
     supporters: Number(petitionData.signatureCount || 0),
     image: petitionData.imageHash || "",
     createdDate: new Date(Number(petitionData.createdAt) * 1000).toLocaleDateString(),
@@ -78,28 +71,32 @@ export function PetitionDetail({ petitionId }: PetitionDetailProps) {
 
             {/* Meta Info */}
             <div className="flex items-center gap-4 flex-wrap">
-              <Badge className="bg-primary/20 text-primary">{petition.category}</Badge>
               <Badge variant="secondary" className="bg-accent/20 text-accent">
                 <TrendingUp size={12} className="mr-1" />
                 {petition.momentum}
               </Badge>
+              {petition.isBoosted && (
+                <Badge className="bg-accent/20 text-accent border-accent/50">
+                  <Zap size={12} className="mr-1" />
+                  Boosted
+                </Badge>
+              )}
             </div>
           </div>
 
           {/* Creator Info */}
           <Card className="glass-dark border-primary/20 p-4 w-full md:w-48">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold">
                 {petition.creatorImage}
               </div>
-              <div className="text-sm">
+              <div className="text-sm flex-1 min-w-0">
                 <p className="font-semibold">Started by</p>
-                <p className="text-muted-foreground">{petition.creator}</p>
+                <p className="text-muted-foreground break-words font-mono text-xs">
+                  {petition.creator}
+                </p>
               </div>
             </div>
-            <Button variant="outline" className="w-full text-xs bg-transparent">
-              Follow
-            </Button>
           </Card>
         </div>
       </div>
@@ -143,15 +140,6 @@ export function PetitionDetail({ petitionId }: PetitionDetailProps) {
         <div className="flex-1 min-w-[300px]">
           <PetitionActions petitionId={petitionId} />
         </div>
-        <Button
-          size="lg"
-          variant="outline"
-          onClick={() => setIsLiked(!isLiked)}
-          className={isLiked ? "text-accent border-accent/50" : ""}
-        >
-          <Heart size={20} fill={isLiked ? "currentColor" : "none"} />
-          {isLiked ? "Liked" : "Like"}
-        </Button>
         <Button 
           size="lg" 
           variant="outline"
@@ -168,46 +156,21 @@ export function PetitionDetail({ petitionId }: PetitionDetailProps) {
         </Button>
       </div>
 
-      {/* Main Content Tabs */}
-      <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-card/50">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="updates">Updates & Discussion</TabsTrigger>
-          <TabsTrigger value="governance">Governance</TabsTrigger>
-        </TabsList>
+      {/* Main Content */}
+      <div className="space-y-6">
+        {/* About Section */}
+        <Card className="glass-dark border-primary/20">
+          <CardHeader>
+            <CardTitle>About This Petition</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-foreground leading-relaxed whitespace-pre-wrap">{petition.description}</p>
+          </CardContent>
+        </Card>
 
-        {/* Overview Tab */}
-        <TabsContent value="overview" className="space-y-6">
-          <Card className="glass-dark border-primary/20">
-            <CardHeader>
-              <CardTitle>About This Campaign</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-foreground leading-relaxed">{petition.fullDescription}</p>
-
-            </CardContent>
-          </Card>
-
-        </TabsContent>
-
-        {/* Updates Tab */}
-        <TabsContent value="updates" className="space-y-6">
-          <Card className="glass-dark border-primary/20 p-8 text-center">
-            <MessageSquare className="mx-auto mb-4 text-muted-foreground" size={32} />
-            <h3 className="text-lg font-semibold mb-2">Updates & Discussion</h3>
-            <p className="text-muted-foreground">This feature will be available soon</p>
-          </Card>
-        </TabsContent>
-
-        {/* Governance Tab */}
-        <TabsContent value="governance" className="space-y-6">
-          <Card className="glass-dark border-primary/20 p-8 text-center">
-            <Vote className="mx-auto mb-4 text-muted-foreground" size={32} />
-            <h3 className="text-lg font-semibold mb-2">Governance</h3>
-            <p className="text-muted-foreground">Governance features coming soon</p>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        {/* Signers Section */}
+        <PetitionSigners petitionId={petitionId} />
+      </div>
     </div>
   )
 }

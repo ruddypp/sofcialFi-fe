@@ -55,7 +55,7 @@ export function SettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Back Button */}
-      <Link href="/" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+      <Link href="/dashboard" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
         <ArrowLeft size={20} />
         Back to Dashboard
       </Link>

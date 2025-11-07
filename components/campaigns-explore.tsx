@@ -103,38 +103,67 @@ export function CampaignsExplore() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredAndSortedCampaigns.map((campaign) => (
           <Link key={campaign.id} href={`/petitions/${campaign.id}`}>
-            <Card className="glass-dark border-primary/20 hover:border-primary/40 transition-all group h-full cursor-pointer overflow-hidden">
-              <CardHeader className="pb-3">
+            <Card className={`glass-dark transition-all group h-full cursor-pointer overflow-hidden relative ${
+              campaign.isBoosted 
+                ? "border-accent/50 border-2 shadow-lg shadow-accent/20" 
+                : "border-primary/20 hover:border-primary/40"
+            }`}>
+              {/* Boosted Glow Effect */}
+              {campaign.isBoosted && (
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 pointer-events-none" />
+              )}
+              
+              {/* Boosted Badge - Top Right Corner */}
+              {campaign.isBoosted && (
+                <div className="absolute top-3 right-3 z-20">
+                  <Badge className="bg-gradient-to-r from-accent to-primary text-white border-0 text-xs font-bold shadow-lg animate-pulse">
+                    <Zap size={10} className="mr-1 fill-white" />
+                    BOOSTED
+                  </Badge>
+                </div>
+              )}
+              
+              <CardHeader className="pb-3 relative z-10">
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <CardTitle className="text-lg line-clamp-2 group-hover:text-primary transition-colors">
+                  <CardTitle className={`text-lg line-clamp-2 transition-colors flex-1 ${
+                    campaign.isBoosted 
+                      ? "text-accent group-hover:text-accent/80" 
+                      : "group-hover:text-primary"
+                  }`}>
                     {campaign.title}
                   </CardTitle>
-                  {campaign.isBoosted && (
-                    <Badge className="bg-accent/30 text-accent border-accent/50 shrink-0">
-                      <Zap size={12} className="mr-1" />
-                      Boosted
-                    </Badge>
-                  )}
                 </div>
                 <p className="text-sm text-muted-foreground line-clamp-2">{campaign.description}</p>
               </CardHeader>
 
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 relative z-10">
                 {/* Date */}
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-muted-foreground flex items-center gap-1">
                     <Calendar size={12} />
                     {campaign.createdDate}
                   </span>
+                  {campaign.isBoosted && (
+                    <span className="text-xs text-accent font-semibold flex items-center gap-1">
+                      <Zap size={10} />
+                      Top Priority
+                    </span>
+                  )}
                 </div>
 
                 {/* Stats */}
-                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                <div className={`p-3 rounded-lg border ${
+                  campaign.isBoosted 
+                    ? "bg-gradient-to-br from-accent/10 to-primary/10 border-accent/30" 
+                    : "bg-muted/30 border-border/50"
+                }`}>
                   <div className="flex items-center gap-2 mb-1">
-                    <Users size={14} className="text-primary" />
+                    <Users size={14} className={campaign.isBoosted ? "text-accent" : "text-primary"} />
                     <span className="text-xs text-muted-foreground">Signatures</span>
                   </div>
-                  <p className="text-sm font-semibold">{campaign.supporters.toLocaleString()}</p>
+                  <p className={`text-sm font-semibold ${campaign.isBoosted ? "text-accent" : ""}`}>
+                    {campaign.supporters.toLocaleString()}
+                  </p>
                 </div>
 
                 {/* CTA Button */}

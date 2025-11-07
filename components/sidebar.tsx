@@ -2,13 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Home, Search, PenTool, Vote, Zap, Settings, ChevronRight, Menu, X } from "lucide-react"
+import { Home, Search, PenTool, Zap, Settings, ChevronRight, Menu, X } from "lucide-react"
 
 const navItems = [
-  { icon: Home, label: "Dashboard", href: "/" },
+  { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: Search, label: "Explore Campaigns", href: "/campaigns" },
   { icon: PenTool, label: "Create Petition", href: "/create" },
-  { icon: Vote, label: "DAO Governance", href: "/governance" },
   { icon: Zap, label: "My Actions", href: "/my-actions" },
   { icon: Settings, label: "Settings", href: "/settings" },
 ]
@@ -41,7 +40,7 @@ export function Sidebar() {
           <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             ImpactChain
           </h1>
-          <p className="text-xs text-sidebar-foreground/60 mt-1">DAO Platform</p>
+          <p className="text-xs text-sidebar-foreground/60 mt-1">Impact Chain Petition Platform</p>
         </div>
 
         {/* Navigation */}
@@ -69,7 +68,7 @@ export function Sidebar() {
 
         {/* Footer */}
         <div className="p-4 border-t border-sidebar-border">
-          <p className="text-xs text-sidebar-foreground/50 text-center">© 2025 ImpactChain DAO</p>
+          <p className="text-xs text-sidebar-foreground/50 text-center">© 2025 ImpactChain</p>
         </div>
       </aside>
 
