@@ -1,0 +1,10 @@
+// Contract addresses on Lisk Sepolia
+export const CONTRACT_ADDRESSES = {
+  CAMPAIGN_TOKEN: "0x7D3e8350c2a87b9d61816975CFe0cd18CC4e7B30",
+  SOULBOUND_MEMBER: "0x9F090D06638f7d32915065d51BE2E737b8E6bDaB",
+  PETITION_PLATFORM: "0x4Ec2EEc9D8071DBB9e4ba332e93d6624fF614D8b",
+} as const;
+
+// Lisk Sepolia chain configuration
+export const LISK_SEPOLIA_CHAIN_ID = 4202;
+
