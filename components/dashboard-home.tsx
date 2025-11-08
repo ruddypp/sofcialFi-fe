@@ -16,7 +16,7 @@ export function DashboardHome() {
       <div>
         <h1 className="text-4xl font-bold mb-2">Welcome to ImpactChain</h1>
         <p className="text-muted-foreground text-lg">
-          Empowering global civic impact through decentralized petitions and transparent DAO governance
+          Empowering global civic impact through decentralized petitions and transparent governance
         </p>
       </div>
 
@@ -30,7 +30,7 @@ export function DashboardHome() {
 
       {/* DAO Statistics */}
       <div>
-        <h2 className="text-2xl font-bold mb-6">DAO Overview</h2>
+        <h2 className="text-2xl font-bold mb-6">Overview</h2>
         <DaoStats />
       </div>
 
