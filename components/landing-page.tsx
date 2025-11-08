@@ -140,7 +140,7 @@ export function LandingPage() {
           hueShift={47}
           noiseIntensity={0.05}
           scanlineIntensity={0}
-          speed={0.3}
+          speed={0.9}
           scanlineFrequency={0.5}
           warpAmount={0.3}
           resolutionScale={1}
