@@ -28,7 +28,7 @@ const wallet = inAppWallet({
   }, 
   chain: liskSepolia
 });
- 
+
 export function TopNavbar() {
   return (
     <header className="h-16 border-b border-border bg-card/50 glass-dark flex items-center justify-between px-8">
@@ -65,6 +65,15 @@ export function TopNavbar() {
             }}
             connectModal={{
               size: "wide",
+              theme: "dark",
+              title: "Connect Wallet",
+              description: "Connect your wallet to get started",
+              buttonText: "Connect Wallet",
+              buttonIcon: <Wallet size={16} />,
+              buttonIconPosition: "left",
+              buttonIconSize: 16,
+              buttonIconColor: "white",
+              buttonIconBackgroundColor: "transparent",
             }}
           />
         </div>
