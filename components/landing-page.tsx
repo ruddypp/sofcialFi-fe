@@ -11,6 +11,7 @@ import { thirdwebClient } from "@/app/config"
 import { inAppWallet } from "thirdweb/wallets"
 import { defineChain } from "thirdweb/chains"
 import DarkVeil from "@/components/DarkVeil"
+import { SponsorMarquee } from "@/components/sponsor-marquee"
 
 // Define Lisk Sepolia chain
 const liskSepolia = defineChain({
@@ -256,6 +257,9 @@ export function LandingPage() {
             </div>
           </div>
         </section>
+
+        {/* Sponsor Marquee Section */}
+        <SponsorMarquee />
 
         {/* Features Section */}
         <section className="py-20 px-6 bg-muted/20 backdrop-blur-sm" ref={featuresRef.ref}>
